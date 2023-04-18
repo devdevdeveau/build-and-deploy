@@ -4,7 +4,8 @@
 <PageTitle>Index</PageTitle>
 
 <h2>Type Text to Send</h2>
-<textarea @bind="model.Value"></textarea>
+<h4>Type in some text and send to echo back</h4>
+<textarea @bind="model.Value"></textarea><br />
 <button @onclick="async ()=> await EchoData()">Send Echo</button>
 @if (!string.IsNullOrWhiteSpace(model.Result))
 {
@@ -14,11 +15,10 @@
 
 @code
 {
-    EchoModel model = new EchoModel();
+    EchoModel model = new();
 
     async Task EchoData()
     {
         model.Result = await EchoService.Echo(model.Value);
-        StateHasChanged();
     }
 }

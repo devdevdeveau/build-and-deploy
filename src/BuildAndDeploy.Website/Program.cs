@@ -8,7 +8,9 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<EchoService>()
-    .AddHttpClient<EchoApi>(client=>client.BaseAddress = new Uri(builder.Configuration["EchoUri"]));
+    .AddHttpClient<EchoApi>(client =>
+        client.BaseAddress =
+            new Uri(builder.Configuration["EchoUri"] ?? throw new InvalidOperationException("Missing Configuration EchoUri")));
 
 await builder.Build().RunAsync();
 
