@@ -1,0 +1,24 @@
+﻿@page "/"
+@inject EchoService EchoService
+
+<PageTitle>Index</PageTitle>
+
+<h2>Type Text to Send</h2>
+<h4>Type in some text and send to echo back</h4>
+<textarea @bind="model.Value"></textarea><br />
+<button @onclick="async ()=> await EchoData()">Send Echo</button>
+@if (!string.IsNullOrWhiteSpace(model.Result))
+{
+    <h2>Result</h2>
+    <pre>@model.Result</pre>
+}
+
+@code
+{
+    EchoModel model = new();
+
+    async Task EchoData()
+    {
+        model.Result = await EchoService.Echo(model.Value);
+    }
+}
